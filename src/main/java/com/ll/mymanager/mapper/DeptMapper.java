@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface DeptMapper {
-    @Select("select * from department")
+    @Select("select id, name, create_time, update_time from department")
     List<Dept> findAll();
 }
