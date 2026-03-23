@@ -31,4 +31,15 @@ public class DeptController {
         deptService.delete(deptId);
         return ApiResponse.success("删除成功");
     }
+
+    /*
+     * 新增部门
+     */
+    @PostMapping
+    public ApiResponse<String> Add(@RequestBody Dept dept){
+        System.out.println("新增部门信息"+dept);
+        deptService.add(dept);
+        return ApiResponse.success("新增成功");
+
+    }
 }
