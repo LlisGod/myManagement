@@ -1,6 +1,7 @@
 package com.ll.mymanager.mapper;
 
 import com.ll.mymanager.pojo.Dept;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -10,4 +11,11 @@ import java.util.List;
 public interface DeptMapper {
     @Select("select id, name, create_time, update_time from department")
     List<Dept> findAll();
+
+    /**
+     * 删除部门
+     * @param id 部门id
+     */
+    @Delete("delete from department where id=#{id}")
+    void delete(Integer id);
 }

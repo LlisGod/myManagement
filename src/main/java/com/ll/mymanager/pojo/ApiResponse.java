@@ -18,6 +18,13 @@ public class ApiResponse<T> {
     private long timestamp;
 
 
+    public static<T> ApiResponse<T>  success(){
+        return ApiResponse.<T>builder()
+                .code(200)
+                .message("成功")
+                .timestamp(System.currentTimeMillis())
+                .build();
+    }
     public static<T> ApiResponse<T>  success(T data){
         return ApiResponse.<T>builder()
                 .code(200)
