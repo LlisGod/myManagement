@@ -40,6 +40,23 @@ public class DeptController {
         System.out.println("新增部门信息"+dept);
         deptService.add(dept);
         return ApiResponse.success("新增成功");
+    }
+    /*
+     * 通过id查询部门
+     */
+    @GetMapping("/{id}")
+    public ApiResponse<Dept> FindDeptById(@PathVariable Integer id){
+        Dept dept=deptService.findDeptById(id);
+        return ApiResponse.success(dept);
+    }
 
+    /*
+     *修改部门信息
+     */
+    @PutMapping
+    public ApiResponse<String> Update(@RequestBody Dept dept){
+        System.out.println("修改部门信息"+dept);
+        deptService.update(dept);
+        return ApiResponse.success();
     }
 }
