@@ -5,9 +5,10 @@ import com.ll.mymanager.pojo.Emp;
 import com.ll.mymanager.pojo.EmpQueryParam;
 
 
-import java.time.LocalDate;
 
 
 public interface EmpService {
     IPage<Emp> page(EmpQueryParam empQueryParam);
+
+    void add(Emp emp);
 }
