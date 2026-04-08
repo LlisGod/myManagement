@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ll.mymanager.mapper.EmpMapper">
+    <update id="update">
+        update employee
+        <set>
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="phone!=null">
+                phone=#{phone},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="avatarUrl!=null">
+                avatar_url= #{avatarUrl},
+            </if>
+            <if test="deptId!=null">
+                dept_id= #{deptId},
+            </if>
+            <if test="entryDate!=null">
+                entry_date= #{entryDate},
+            </if>
+            <if test="updateTime!=null">
+                update_time= #{updateTime},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteBatchIds">
+        delete from employee where id in
+        <foreach item="id" collection="ids" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="page" resultType="com.ll.mymanager.pojo.Emp">
+        select e.*, d.name deptName
+        from employee e
+        left join department d on e.dept_id = d.id
+        <where>
+            <if test="eqp.name!=null and eqp.name!=''">
+            e.name like concat('%',#{eqp.name},'%')
+            </if>
+            <if test = "eqp.gender!=null">
+                and e.gender=#{eqp.gender}
+            </if>
+            <if test="eqp.beginDate!=null and eqp.endDate!=null">
+                and e.entry_date between #{eqp.beginDate} and #{eqp.endDate}
+            </if>
+            order by e.update_time desc
+        </where>
+
+    </select>
+
+    <resultMap id="empResultMap" type="com.ll.mymanager.pojo.Emp">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+
+        <collection property="empExprs" ofType="com.ll.mymanager.pojo.EmpExpr">
+            <id property="id" column="we_id"/>
+            <result property="empId" column="id"/>
+            <result property="company" column="company"/>
+            <result property="startDate" column="we_start_date"/>
+            <result property="endDate" column="we_end_date"/>
+        </collection>
+    </resultMap>
+    <select id="infoById" resultMap="empResultMap">
+        select e.*,
+        we.id we_id,
+        we.company,
+        we.start_date we_start_date,
+        we.end_date we_end_date
+        from employee e
+        left join work_experience we on e.id = we.emp_id
+        where e.id = #{id}
+    </select>
+</mapper>
