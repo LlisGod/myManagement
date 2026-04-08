@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @Slf4j
@@ -41,7 +42,21 @@ public class EmpController {
      */
     @PostMapping
     public ApiResponse<String> add(@RequestBody Emp emp){
+        log.info("添加员工信息 {}",emp);
         empService.add(emp);
         return ApiResponse.success("添加成功");
     }
+    //Todo 修改员工信息
+
+
+    //Todo  根据id查询员工信息
+
+    //Todo 删除员工信息
+    @DeleteMapping
+    public ApiResponse<String> delete(@RequestParam List<Integer> ids){
+        log.info("删除员工信息 {}",ids);
+        empService.delete(ids);
+        return ApiResponse.success("删除成功");
+    }
+
 }

@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ll.mymanager.pojo.Emp;
 import com.ll.mymanager.pojo.EmpQueryParam;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 
 @Mapper
@@ -20,4 +19,6 @@ public interface EmpMapper {
     // 数据库id回填，保证工作经验员工id与实际员工id一致
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Emp emp);
+
+    void deleteBatchIds(List<Integer> ids);
 }

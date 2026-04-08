@@ -2,6 +2,7 @@ package com.ll.mymanager.mapper;
 
 
 import com.ll.mymanager.pojo.EmpExpr;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,4 +15,10 @@ public interface EmpExprMapper {
      */
 
     void insertBatch(List<EmpExpr> empExprs);
+
+    /**
+     * 批量删除员工工作经历
+     * @param ids 员工工作经历id列表
+     */
+    void deleteBatchEmpIds(List<Integer> ids);
 }

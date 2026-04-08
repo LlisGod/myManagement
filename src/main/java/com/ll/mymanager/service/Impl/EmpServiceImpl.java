@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EmpServiceImpl implements EmpService {
@@ -46,5 +47,13 @@ public class EmpServiceImpl implements EmpService {
             empExprMapper.insertBatch(emp.getEmpExprs());
         }
 
+    }
+
+    @Transactional
+    @Override
+    public void delete(List<Integer> ids) {
+
+        empMapper.deleteBatchIds(ids);
+        empExprMapper.deleteBatchEmpIds(ids);
     }
 }
