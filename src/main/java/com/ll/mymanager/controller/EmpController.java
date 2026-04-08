@@ -56,14 +56,21 @@ public class EmpController {
         empService.delete(ids);
         return ApiResponse.success("删除成功");
     }
-    //Todo 修改员工信息
 
 
-    //Todo  根据id查询员工信息（查询回显）
+
+    //  根据id查询员工信息（查询回显）
     @GetMapping("/{id}")
     public ApiResponse<Emp> findById(@PathVariable Integer id){
         log.info("查询员工信息 {}",id);
         Emp emp = empService.infoById(id);
         return ApiResponse.success(emp);
+    }
+    //Todo 修改员工信息
+    @PutMapping
+    public ApiResponse<String> update(@RequestBody Emp emp){
+        log.info("修改员工信息 {}",emp);
+        empService.update(emp);
+        return ApiResponse.success("修改成功");
     }
 }

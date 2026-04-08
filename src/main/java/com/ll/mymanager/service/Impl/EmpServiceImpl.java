@@ -61,4 +61,19 @@ public class EmpServiceImpl implements EmpService {
     public Emp infoById(Integer id) {
         return empMapper.infoById(id);
     }
+
+    @Transactional
+    @Override
+    public void update(Emp emp) {
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.update(emp);
+        empExprMapper.deleteBatchEmpIds(List.of(emp.getId()));
+        //员工工作经历批量插入
+        //工作经历不能为空
+        if (emp.getEmpExprs() != null &&!emp.getEmpExprs().isEmpty()){
+            // 给工作经历设置员工id
+            emp.getEmpExprs().forEach(expr -> expr.setEmpId(emp.getId()));
+            empExprMapper.insertBatch(emp.getEmpExprs());
+        }
+    }
 }
