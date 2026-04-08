@@ -28,4 +28,36 @@
         </where>
 
     </select>
+
+    <resultMap id="empResultMap" type="com.ll.mymanager.pojo.Emp">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="entryDate" column="entry_date"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+
+        <collection property="empExprs" ofType="com.ll.mymanager.pojo.EmpExpr">
+            <id property="id" column="we_id"/>
+            <result property="empId" column="id"/>
+            <result property="company" column="company"/>
+            <result property="startDate" column="we_start_date"/>
+            <result property="endDate" column="we_end_date"/>
+        </collection>
+    </resultMap>
+    <select id="infoById" resultMap="empResultMap">
+        select e.*,
+        we.id we_id,
+        we.company,
+        we.start_date we_start_date,
+        we.end_date we_end_date
+        from employee e
+        left join work_experience we on e.id = we.emp_id
+        where e.id = #{id}
+    </select>
 </mapper>

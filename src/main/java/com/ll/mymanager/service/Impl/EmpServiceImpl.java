@@ -56,4 +56,9 @@ public class EmpServiceImpl implements EmpService {
         empMapper.deleteBatchIds(ids);
         empExprMapper.deleteBatchEmpIds(ids);
     }
+
+    @Override
+    public Emp infoById(Integer id) {
+        return empMapper.infoById(id);
+    }
 }

@@ -4,6 +4,7 @@ package com.ll.mymanager.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ll.mymanager.pojo.ApiResponse;
 import com.ll.mymanager.pojo.Emp;
+import com.ll.mymanager.pojo.EmpExpr;
 import com.ll.mymanager.pojo.EmpQueryParam;
 import com.ll.mymanager.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,17 +47,23 @@ public class EmpController {
         empService.add(emp);
         return ApiResponse.success("添加成功");
     }
-    //Todo 修改员工信息
 
 
-    //Todo  根据id查询员工信息
-
-    //Todo 删除员工信息
+    // 删除员工信息
     @DeleteMapping
     public ApiResponse<String> delete(@RequestParam List<Integer> ids){
         log.info("删除员工信息 {}",ids);
         empService.delete(ids);
         return ApiResponse.success("删除成功");
     }
+    //Todo 修改员工信息
 
+
+    //Todo  根据id查询员工信息（查询回显）
+    @GetMapping("/{id}")
+    public ApiResponse<Emp> findById(@PathVariable Integer id){
+        log.info("查询员工信息 {}",id);
+        Emp emp = empService.infoById(id);
+        return ApiResponse.success(emp);
+    }
 }

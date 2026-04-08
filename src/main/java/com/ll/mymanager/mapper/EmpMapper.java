@@ -21,4 +21,6 @@ public interface EmpMapper {
     int insert(Emp emp);
 
     void deleteBatchIds(List<Integer> ids);
+
+    Emp infoById(Integer id);
 }
