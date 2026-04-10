@@ -3,6 +3,7 @@ package com.ll.mymanager.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ll.mymanager.pojo.Emp;
 import com.ll.mymanager.pojo.EmpQueryParam;
+import com.ll.mymanager.pojo.LogInfo;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface EmpService {
     Emp infoById(Integer id);
 
     void update(Emp emp);
+
+    LogInfo login(Emp emp);
 }

@@ -6,7 +6,10 @@ import com.ll.mymanager.mapper.EmpExprMapper;
 import com.ll.mymanager.mapper.EmpMapper;
 import com.ll.mymanager.pojo.Emp;
 import com.ll.mymanager.pojo.EmpQueryParam;
+import com.ll.mymanager.pojo.LogInfo;
 import com.ll.mymanager.service.EmpService;
+import com.ll.mymanager.utils.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
 
@@ -75,5 +79,16 @@ public class EmpServiceImpl implements EmpService {
             emp.getEmpExprs().forEach(expr -> expr.setEmpId(emp.getId()));
             empExprMapper.insertBatch(emp.getEmpExprs());
         }
+    }
+
+    @Override
+    public LogInfo login(Emp emp) {
+        Emp e = empMapper.selectByUsernameAndPassword(emp);
+
+        if (e == null){
+            throw new RuntimeException("用户名或密码错误");
+        }
+        log.info("用户校验成功 {}",e);
+        return new LogInfo(e.getUsername(), e.getName(),e.getId(),JwtUtils.generateToken(e.getUsername(), e.getId()));
     }
 }
